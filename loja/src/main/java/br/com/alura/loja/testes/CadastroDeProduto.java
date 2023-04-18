@@ -6,7 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import br.com.alura.loja.dao.ProdutoDao;
 import br.com.alura.loja.modelo.Produto;
+import br.com.alura.loja.util.JPAUtil;
 
 public class CadastroDeProduto {
 	public static void main(String[] args) {
@@ -16,13 +18,13 @@ public class CadastroDeProduto {
 		celular.setPreco(new BigDecimal("800"));
 		
 		
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("loja");
-		//Tem um papel de gerenciar as entidades
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = JPAUtil.getEntityManager();
+		ProdutoDao dao = new ProdutoDao(em);
+		
 		//Pede para jpa pegar a transação
 		em.getTransaction().begin();
 		//O que vc quer fazer de operação
-		em.persist(celular);
+		dao.cadastrar(celular);
 		//Faz o commit
 		em.getTransaction().commit();
 		em.close();
