@@ -16,6 +16,8 @@ public class Categoria {
 
 	private String nome;
 
+	public Categoria() {}
+	
 	public Categoria(String nome) {
 		super();
 		this.nome = nome;
@@ -28,6 +30,7 @@ public class Categoria {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	
 	
 }
