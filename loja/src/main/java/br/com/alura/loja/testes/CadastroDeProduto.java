@@ -15,21 +15,27 @@ public class CadastroDeProduto {
 		Categoria celulares = new Categoria("CELULARES");
 		
 		
-		Produto celular = new Produto("Xiaomi Redmi","Maito legal",new BigDecimal("800"),celulares);
+		//Produto celular = new Produto("Xiaomi Redmi","Maito legal",new BigDecimal("800"),celulares);
 				
 		EntityManager em = JPAUtil.getEntityManager();
-		ProdutoDao produtoDao = new ProdutoDao(em);
-		CategoriaDao categoriaDao = new CategoriaDao(em);
+		//ProdutoDao produtoDao = new ProdutoDao(em);
+		//CategoriaDao categoriaDao = new CategoriaDao(em);
 		
 		//Pede para jpa pegar a transação
 		em.getTransaction().begin();
 		
-		categoriaDao.cadastrar(celulares);
+		//categoriaDao.cadastrar(celulares);
 		//O que vc quer fazer de operação
-		produtoDao.cadastrar(celular);
+		//produtoDao.cadastrar(celular);
 		//Faz o commit
+		
+		em.persist(celulares);
+	    celulares.setNome("XPTO");
+		
 		em.getTransaction().commit();
 		em.close();
+		
+		 celulares.setNome("1234");
 		
 
 	}
