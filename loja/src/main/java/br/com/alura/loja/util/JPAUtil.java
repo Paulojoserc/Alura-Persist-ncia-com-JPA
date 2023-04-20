@@ -5,9 +5,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class JPAUtil {
-private static final EntityManagerFactory FACTORY = Persistence.createEntityManagerFactory("loja");
-//Tem um papel de gerenciar as entidades
-public static EntityManager getEntityManager() {
-	return FACTORY.createEntityManager();
-}
+	
+	private static final EntityManagerFactory FACTORY = Persistence
+			.createEntityManagerFactory("loja");
+
+	public static EntityManager getEntityManager() { 
+		return FACTORY.createEntityManager();
+	}
+	
 }
