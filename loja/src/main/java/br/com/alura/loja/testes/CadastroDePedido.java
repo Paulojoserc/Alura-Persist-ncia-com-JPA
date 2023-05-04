@@ -15,6 +15,7 @@ import br.com.alura.loja.modelo.ItemPedido;
 import br.com.alura.loja.modelo.Pedido;
 import br.com.alura.loja.modelo.Produto;
 import br.com.alura.loja.util.JPAUtil;
+import br.com.alura.loja.vo.RelatorioDeVendasVo;
 
 public class CadastroDePedido {
 	public static void main(String[] args) {
@@ -39,16 +40,18 @@ public class CadastroDePedido {
 	BigDecimal totalVendido = pedidoDao.valorTotalVendido();
 	System.out.println("VALOR TOTAL: "+totalVendido);
 	
-	List<Object[]> relatorio = pedidoDao.relatorioDeVendas();
-	for (Object[] obj: relatorio) {
-		System.out.println(obj[0]);
-		System.out.println(obj[1]);
-		System.out.println(obj[2]);
-	}
+	List<RelatorioDeVendasVo> relatorio = pedidoDao.relatorioDeVendas();
+	relatorio.forEach(System.out::println);
+	
 	}
 	private static void popularBancoDeDados() {
 		Categoria celulares = new Categoria("CELULARES");
-		Produto celular = new Produto("Xiaomi Redmi", "Muito legal", new BigDecimal("800"), celulares );
+		Categoria videogames = new Categoria("VIDEOGAMES");
+		Categoria informatica = new Categoria("INFORMATICA");
+		
+		Produto celular = new Produto("Xiaomi Redmi", "Muito legal", new BigDecimal("800"), celulares);
+		Produto videogame = new Produto("PS5", "Playstation 5", new BigDecimal("8000"), videogames);
+		Produto macbook = new Produto("Macbook", "Macboo pro retina", new BigDecimal("14000"), informatica);
 		
 		Cliente cliente  =  new Cliente ("Rodrigo", "123456");
 		
@@ -60,7 +63,13 @@ public class CadastroDePedido {
 		em.getTransaction().begin();
 		
 		categoriaDao.cadastrar(celulares);
+		categoriaDao.cadastrar(videogames);
+		categoriaDao.cadastrar(informatica);
+		
 		produtoDao.cadastrar(celular);
+		produtoDao.cadastrar(videogame);
+		produtoDao.cadastrar(macbook);
+		
 		clienteDao.cadastrar(cliente);
 		
 		em.getTransaction().commit();

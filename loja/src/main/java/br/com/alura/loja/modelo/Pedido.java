@@ -24,12 +24,12 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "valor_total")
-	private BigDecimal ValorTotal = BigDecimal.ZERO;
+	private BigDecimal valorTotal = BigDecimal.ZERO;
 	private LocalDate data = LocalDate.now();
 
 	@ManyToOne
 	private Cliente cliente;
-
+	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
 
@@ -39,11 +39,11 @@ public class Pedido {
 	public Pedido(Cliente cliente) {
 		this.cliente = cliente;
 	}
-
+	
 	public void adicionarItem(ItemPedido item) {
 		item.setPedido(this);
 		this.itens.add(item);
-		this.ValorTotal = this.ValorTotal.add(item.getValor());
+		this.valorTotal = this.valorTotal.add(item.getValor());
 	}
 
 	public Long getId() {
@@ -54,27 +54,27 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public BigDecimal getPreco() {
-		return ValorTotal;
+	public BigDecimal getValorTotal() {
+		return valorTotal;
 	}
 
-	public void setPreco(BigDecimal ValorTotal) {
-		this.ValorTotal = ValorTotal;
+	public void setValorTotal(BigDecimal valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
-	public LocalDate getDataCadastro() {
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setDataCadastro(LocalDate data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 
-	public Cliente getCategoria() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public void setCategoria(Cliente cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
