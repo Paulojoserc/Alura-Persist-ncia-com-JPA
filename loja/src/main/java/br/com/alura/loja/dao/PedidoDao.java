@@ -33,6 +33,8 @@ public class PedidoDao {
 	}
 
 	public Pedido buscarPedidoComCliente(Long id) {
-return em.createQuery("SELECT p FROM Pedido p JOIN FETCH WHERE p.cliente p.id = :id", Pedido.class).setParameter("id", id).getSingleResult();
+		return em.createQuery("SELECT p FROM Pedido p JOIN FETCH p.cliente WHERE p.id = :id", Pedido.class)
+				.setParameter("id", id)
+				.getSingleResult();
 	}
 }

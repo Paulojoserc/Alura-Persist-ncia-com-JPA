@@ -1,11 +1,14 @@
 package br.com.alura.loja.dao;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import br.com.alura.loja.modelo.Produto;
+import net.bytebuddy.asm.Advice.Return;
 
 public class ProdutoDao {
 
@@ -18,7 +21,7 @@ public class ProdutoDao {
 	public void cadastrar(Produto produto) {
 		this.em.persist(produto);
 	}
-		
+
 	public void atualizar(Produto produto) {
 		this.em.merge(produto);
 	}
@@ -27,34 +30,53 @@ public class ProdutoDao {
 		produto = em.merge(produto);
 		this.em.remove(produto);
 	}
-	
+
 	public Produto buscarPorId(Long id) {
 		return em.find(Produto.class, id);
 	}
-	
+
 	public List<Produto> buscarTodos() {
 		String jpql = "SELECT p FROM Produto p";
 		return em.createQuery(jpql, Produto.class).getResultList();
 	}
-	
+
 	public List<Produto> buscarPorNome(String nome) {
 		String jpql = "SELECT p FROM Produto p WHERE p.nome = :nome";
-		return em.createQuery(jpql, Produto.class)
-				.setParameter("nome", nome)
-				.getResultList();
+		return em.createQuery(jpql, Produto.class).setParameter("nome", nome).getResultList();
 	}
-	
+
 	public List<Produto> buscarPorNomeDaCategoria(String nome) {
-		return em.createNamedQuery("Produto.produtosPorCategoria", Produto.class)
-				.setParameter("nome", nome)
+		return em.createNamedQuery("Produto.produtosPorCategoria", Produto.class).setParameter("nome", nome)
 				.getResultList();
 	}
-	
+
 	public BigDecimal buscarPrecoDoProdutoComNome(String nome) {
 		String jpql = "SELECT p.preco FROM Produto p WHERE p.nome = :nome";
-		return em.createQuery(jpql, BigDecimal.class)
-				.setParameter("nome", nome)
-				.getSingleResult();
+		return em.createQuery(jpql, BigDecimal.class).setParameter("nome", nome).getSingleResult();
+	}
+
+	public List<Produto> buscarPorParametros(String nome, BigDecimal preco, LocalDate dataCadastro) {
+		String jpql = "Select p From Produto p Where 1=1";
+		if (nome != null && !nome.trim().isEmpty()) {
+			jpql = "And p.nome = :nome";
+		}
+		if (preco != null) {
+			jpql = "And p.preco = :preco";
+		}
+		if (dataCadastro != null) {
+			jpql = "And p.dataCadastro = :dataCadastro";
+		}
+		TypedQuery<Produto> createQuery = em.createQuery(jpql, Produto.class);
+		if (nome != null && !nome.trim().isEmpty()) {
+			createQuery.setParameter("nome", nome);
+		}
+		if (preco != null) {
+			createQuery.setParameter("preco", preco);
+		}
+		if (dataCadastro != null) {
+			createQuery.setParameter("dataCadastro", dataCadastro);
+		}
+		return createQuery.getResultList();
 	}
 
 }
