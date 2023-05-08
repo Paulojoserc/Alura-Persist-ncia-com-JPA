@@ -31,6 +31,7 @@ private static void popularBancoDeDados() {
 	ProdutoDao produtoDao = new ProdutoDao(em);
 	CategoriaDao categoriaDao = new CategoriaDao(em);
 	
+	
 	em.getTransaction().begin();
 
 	categoriaDao.cadastrar(celulares);
