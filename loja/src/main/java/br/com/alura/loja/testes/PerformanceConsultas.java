@@ -14,7 +14,7 @@ public static void main(String[] args) {
 	popularBancoDeDados();
 	EntityManager em = JPAUtil.getEntityManager();
 	Pedido pedido = em.find(Pedido.class, 1l);
-	System.out.println(pedido.getData());
+	System.out.println(pedido.getItens().size());
 }
 private static void popularBancoDeDados() {
 	Categoria celulares = new Categoria("CELULARES");
@@ -24,5 +24,7 @@ private static void popularBancoDeDados() {
 	Produto celular = new Produto("Xiaomi Redmi", "Muito legal", new BigDecimal("800"), celulares);
 	Produto videogame = new Produto("PS5", "Playstation 5", new BigDecimal("8000"), videogames);
 	Produto macbook = new Produto("Macbook", "Macboo pro retina", new BigDecimal("14000"), informatica);
+	
+	
 }
 }
