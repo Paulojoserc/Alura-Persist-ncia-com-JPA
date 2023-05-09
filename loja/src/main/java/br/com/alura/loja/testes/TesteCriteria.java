@@ -2,6 +2,7 @@ package br.com.alura.loja.testes;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -16,7 +17,8 @@ public static void main(String[] args) {
 	popularBancoDeDados();
 	EntityManager em = JPAUtil.getEntityManager();
 	ProdutoDao produtoDao = new ProdutoDao(em);
-	produtoDao.buscarPorParametrosComCriteria("PS5", null, LocalDate.now());
+	List<Produto> produtos = produtoDao.buscarPorParametrosComCriteria(null, null, LocalDate.now());
+	produtos.forEach(p -> System.out.println(p.getNome()));
 }
 private static void popularBancoDeDados() {
 	Categoria celulares = new Categoria("CELULARES");
