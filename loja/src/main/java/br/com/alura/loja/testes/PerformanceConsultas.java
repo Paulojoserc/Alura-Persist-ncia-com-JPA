@@ -24,15 +24,16 @@ public static void main(String[] args) {
 	em.close();
 	System.out.println(pedido.getCliente().getNome());
 }
+
 private static void popularBancoDeDados() {
 	Categoria celulares = new Categoria("CELULARES");
 	Categoria videogames = new Categoria("VIDEOGAMES");
 	Categoria informatica = new Categoria("INFORMATICA");
-	
+
 	Produto celular = new Produto("Xiaomi Redmi", "Muito legal", new BigDecimal("800"), celulares);
 	Produto videogame = new Produto("PS5", "Playstation 5", new BigDecimal("8000"), videogames);
 	Produto macbook = new Produto("Macbook", "Macboo pro retina", new BigDecimal("14000"), informatica);
-	
+
 	Cliente cliente = new Cliente("Rodrigo", "123456");
 
 	Pedido pedido = new Pedido(cliente);
